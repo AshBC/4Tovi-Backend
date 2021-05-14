@@ -31,8 +31,10 @@ router.get("/:id", (req, res) => {
   });
 
 router.delete("/:id", (req,res) => {
-    const data = JSON.parse(loadRecipes());
-    const newList = data.filter((item) => item.id !== req.params.id);
+    const RList = JSON.parse(loadRecipes());
+    const newList = RList.filterIndex((item) => {
+        return item.id === req.params.id;
+    });
     
     fs.writeFileSync("./data/recipes.json", JSON.stringify(newList));
     console.log(newList);
@@ -40,15 +42,15 @@ router.delete("/:id", (req,res) => {
 });
 
 router.post("/", (req, res) => {
-    if (req.body.name === "" && req.body.description === "") {
+    if (req.body.name === "" && req.body.instructions === "") {
       res.status(422).send("please enter a name and description");
     } else {
       const RList = JSON.parse(loadRecipes());
       const newRecipe = {
         id: uuidv4(),
         name: req.body.name,
-        instructions: req.body.channel,
-        ingredients: req.body.description,
+        instructions: req.body.instructions,
+        ingredients: req.body.ingredients,
       };
       RList.push(newRecipe);
       fs.writeFileSync("./data/recipes.json", JSON.stringify(RList));
