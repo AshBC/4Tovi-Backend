@@ -32,9 +32,7 @@ router.get("/:id", (req, res) => {
 
 router.delete("/:id", (req,res) => {
     const RList = JSON.parse(loadRecipes());
-    const newList = RList.filterIndex((item) => {
-        return item.id === req.params.id;
-    });
+    const newList = RList.filter((item) => item.id !== req.params.id);
     
     fs.writeFileSync("./data/recipes.json", JSON.stringify(newList));
     console.log(newList);
