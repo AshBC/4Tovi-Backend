@@ -40,8 +40,8 @@ router.delete("/:id", (req,res) => {
 });
 
 router.post("/", (req, res) => {
-    if (req.body.name === "" && req.body.instructions === "") {
-      res.status(422).send("please enter a name and description");
+    if (req.body.name === "" && req.body.ingredients === "") {
+      res.status(422).send("please enter a name and ingredients");
     } else {
       const RList = JSON.parse(loadRecipes());
       const newRecipe = {
